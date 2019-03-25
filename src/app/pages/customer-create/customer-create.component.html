@@ -1,0 +1,79 @@
+<div class="container mt-5">
+    <div class="row">
+      <div class="col-md-8 col-sm-10 offset-md-2 offset-sm-1">
+        <div class="card border-0">
+          <div class="card-header bg-white border-0 text-center">
+            <h3>Register as a Customer</h3>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="customerForm" (ngSubmit)="onSubmit()" >
+              <div class="form-group col-md-8 offset-md-2 col-sm-12 mt-md-2">
+                <label for="custName">Full Name*</label>
+                <input type="text" class="form-control" id="custName" formControlName="fullName">
+                <div class="form-text text-danger" *ngIf="!customerForm.get('fullName').valid && customerForm.get('fullName').touched">
+                  Name cannot be blank.
+                </div>
+              </div>
+              <div class="form-group col-md-8 offset-md-2 col-sm-12 mt-md-2">
+                <label for="custEmail">Email*</label>
+                <input type="email" class="form-control" id="custEmail" formControlName="email">
+                <div class="form-text text-danger" *ngIf="customerForm.get('email').getError('required') && customerForm.get('email').touched">
+                    Email cannot be blank.
+                </div>
+                <div class="form-text text-danger" *ngIf="customerForm.get('email').getError('email') && customerForm.get('email').touched">
+                    Please enter a valid email id.
+                </div>
+              </div>
+              <div class="form-group col-md-8 offset-md-2 col-sm-12 mt-md-2">
+                <label for="custPass">Password*</label>
+                <input type="password" class="form-control" id="custPass" formControlName="password">
+                <div class="form-text text-danger" *ngIf="customerForm.get('password').getError('required') && customerForm.get('password').touched">
+                    Password cannot be blank.
+                </div>
+                <div class="form-text text-danger" *ngIf="customerForm.get('password').getError('minlength') && customerForm.get('password').touched">
+                    Password should be minimum 8 characters.
+                </div>
+              </div>
+              <div class="form-group col-md-8 offset-md-2 col-sm-12 mt-md-2">
+                <label for="custAddr">Address* </label>
+                <textarea rows="4" class="form-control" for="custAddr" formControlName="address"></textarea>
+                <div class="form-text text-danger" *ngIf="!customerForm.get('address').valid && customerForm.get('address').touched">
+                    Address cannot be blank.
+                  </div>
+              </div>
+              <div class="form-group col-md-8 offset-md-2 col-sm-12 mt-md-2">
+                  <label for="custMob">Mobile No.* </label>
+                  <input type="text" id="custMob" class="form-control" formControlName="mobile">
+                  <div class="form-text text-danger" *ngIf="customerForm.get('mobile').getError('required') && customerForm.get('mobile').touched">
+                      Mobile cannot be blank.
+                  </div>
+                  <div class="form-text text-danger" *ngIf="customerForm.get('mobile').getError('pattern') && customerForm.get('mobile').touched">
+                      Please enter a valid mobile number.
+                  </div>
+              </div>
+              <div class="form-row mt-5">
+                <div class="form-group col-md-4 offset-md-2 col-sm-6">
+                  <button class="btn btn-outline-primary btn-block" [disabled]="!customerForm.valid" *ngIf="!showLoader">
+                      <i class="fas fa-user-plus mr-2"></i> Register
+                  </button>
+
+                  <button class="btn btn-outline-primary btn-block" type="button" disabled *ngIf="showLoader">
+                      <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
+                      Please wait...
+                    </button>
+
+                </div>
+                <div class="form-group col-md-4 col-sm-6">
+                    <button class="btn btn-outline-dark btn-block" [routerLink]="['/home']" >
+                        <i class="fas fa-ban mr-2"></i> Cancel
+                    </button>
+                  </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <span class="d-none d-lg-block"> (hold ctrl to select multiple) </span>  -->

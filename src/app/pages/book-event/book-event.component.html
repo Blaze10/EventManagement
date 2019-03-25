@@ -1,0 +1,83 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-12 col-sm-12">
+      <div class="card">
+        <div class="card-header bg-dark text-white">
+          <h4><i class="fas fa-thumbtack mr-2"></i>Book an event</h4>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()" >
+            <div class="form-row">
+              <div class="form-group col-md-4 col-sm-6">
+                  <label for="custEmail">Email</label>
+                  <input type="text" class="form-control" id="custEmail" formControlName="customeremail" disabled>
+              </div>
+              <div class="form-group col-md-4 col-sm-6">
+                  <label for="organizer">Organizer</label>
+                  <select class="form-control" id="organizer" (change)="onOrganizerSelect()" formControlName="organizer">
+                    <option selected [ngValue]="null">Select</option>
+                    <option *ngFor="let item of organizersList" [value]="item.$key">{{ item.fullName }}</option>
+                  </select>
+                  <div class="form-text text-danger" *ngIf="!bookingForm.get('organizer').valid && bookingForm.get('organizer').touched">
+                    Please select an organizer.
+                  </div>
+              </div>
+              <div class="form-group col-md-4 col-sm-6">
+                  <label for="venue">Venue</label>
+                  <select class="form-control" id="venue" formControlName="venue">
+                    <option selected [ngValue]="null">Select</option>
+                    <option *ngFor="let item of venueList" [value]="item"> {{ item }}</option>
+                  </select>
+                  <div class="form-text text-danger" *ngIf="!bookingForm.get('venue').valid && bookingForm.get('venue').touched">
+                      Please select a venue.
+                  </div>
+              </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4 col-sm-6">
+                    <label for="event">Event</label>
+                    <select class="form-control" id="event" formControlName="event">
+                      <option selected [ngValue]="null">Select</option>
+                      <option *ngFor="let item of eventList" [value]="item">{{ item }}</option>
+                    </select>
+                    <div class="form-text text-danger" *ngIf="!bookingForm.get('event').valid && bookingForm.get('event').touched">
+                        Please select an event.
+                    </div>
+                </div>
+                <div class="form-group col-md-4 col-sm-6">
+                    <label for="eventDate">Event date</label>
+                    <input type="text" class="form-control" id="eventDate" bsDatepicker [bsConfig]="datepickerConfig" formControlName="date">
+                    <div class="form-text text-danger" *ngIf="!bookingForm.get('date').valid && bookingForm.get('date').touched">
+                        Please select a date.
+                    </div>
+
+                </div>
+                <div class="form-group col-md-4 col-sm-6">
+                    <label for="comments">Comments</label>
+                    <textarea class="form-control" id="comments" rows="4" formControlName="comments"></textarea>
+                </div>
+            </div>
+            <div class="form-row mt-3">
+              <div class="form-group col-md-2 col-sm-6">
+                <button class="btn btn-outline-dark btn-block" type="submit" [disabled]="!bookingForm.valid" *ngIf="!showLoader">
+                  <i class="fa fa-save mr-2"></i> Submit
+                </button>
+
+                <button class="btn btn-outline-dark btn-block" type="button" disabled *ngIf="showLoader">
+                    <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
+                    Please wait...
+                  </button>
+
+              </div>
+              <div class="form-group col-md-2 col-sm-6">
+                  <button class="btn btn-outline-dark btn-block" type="button" routerLink="/customerProfile">
+                    <i class="fa fa-trash mr-2"></i> Cancel
+                  </button>
+                </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

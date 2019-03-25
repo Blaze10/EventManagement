@@ -1,0 +1,48 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-6 col-sm-12 offset-md-3">
+      <div class="card" *ngIf="!showLoader">
+        <div class="card-header bg-dark text-white">
+          <h4> <i class="fas fa-user-circle mr-2"></i> {{ loggedInOrganizer?.fullName }}'s Profile</h4>
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="form-group col-md-12 col-sm-12">
+              <label for="orgName">Name</label>
+              <input type="text" class="form-control" [value]="loggedInOrganizer?.fullName" disabled id="orgName">
+            </div>
+            <div class="form-group col-md-12 col-sm-12">
+              <label for="orgEmail">Email</label>
+              <input type="text" class="form-control" [value]="loggedInOrganizer?.email" disabled id="orgEmail">
+            </div>
+            <div class="form-group col-md-12 col-sm-12">
+              <label for="orgMogile">Mobile</label>
+              <input type="text" class="form-control" [value]="loggedInOrganizer?.mobile" disabled id="orgMogile">
+            </div>
+            <div class="form-group col-md-12 col-sm-12">
+              <label for="orgAddress">Address</label>
+              <textarea class="form-control" [value]="loggedInOrganizer?.address" disabled rows="4" id="orgAddress"></textarea>
+            </div>
+            <div class="form-group col-md-12 col-sm-12">
+              <label for="orgEvents">Available Events</label>
+              <select multiple class="form-control" disabled id="orgEvents">
+                <option *ngFor="let item of eventList" [value]="item">{{ item }}</option>
+              </select>
+            </div>
+            <div class="form-group col-md-12 col-sm-12">
+              <label for="orgVenues">Available Venues</label>
+              <select multiple class="form-control" disabled id="orgVenues">
+                <option *ngFor="let item of venueList" [value]="item">{{ item }}</option>
+              </select>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="text-center mt-5" *ngIf="showLoader">
+        <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

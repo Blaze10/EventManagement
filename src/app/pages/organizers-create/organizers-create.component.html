@@ -1,0 +1,97 @@
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-md-8 col-sm-10 offset-md-2 offset-sm-1">
+      <div class="card border-0">
+        <div class="card-header bg-white border-0 text-center">
+          <h3>Register as an Organizer</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="organizerForm" (ngSubmit)="onSubmit()" >
+            <div class="form-group col-md-8 offset-md-2 col-sm-12 mt-md-2">
+              <label for="ogName">Full Name*</label>
+              <input type="text" class="form-control" id="ogName" formControlName="fullName">
+              <div class="form-text text-danger" *ngIf="!organizerForm.get('fullName').valid && organizerForm.get('fullName').touched">
+                Name cannot be blank.
+              </div>
+            </div>
+            <div class="form-group col-md-8 offset-md-2 col-sm-12 mt-md-2">
+              <label for="ogEmail">Email*</label>
+              <input type="email" class="form-control" id="ogEmail" formControlName="email">
+              <div class="form-text text-danger" *ngIf="organizerForm.get('email').hasError('required') && organizerForm.get('email').touched">
+                  Email cannot be blank.
+              </div>
+              <div class="form-text text-danger" *ngIf="organizerForm.get('email').hasError('email') && organizerForm.get('email').touched">
+                  Please enter a valid email id.
+              </div>
+            </div>
+            <div class="form-group col-md-8 offset-md-2 col-sm-12 mt-md-2">
+              <label for="ogPass">Password*</label>
+              <input type="password" class="form-control" id="ogPass" formControlName="password">
+              <div class="form-text text-danger" *ngIf="organizerForm.get('password').hasError('required') && organizerForm.get('password').touched">
+                  Password cannot be blank.
+              </div>
+              <div class="form-text text-danger" *ngIf="organizerForm.get('password').hasError('minlength') && organizerForm.get('password').touched">
+                  Password should contain minimum 8 characters.
+              </div>
+            </div>
+            <div class="form-group col-md-8 offset-md-2 col-sm-12 mt-md-2">
+                <label for="ogAddress">Address*</label>
+                <textarea rows="4" class="form-control" id="ogAddress" formControlName="address"></textarea>
+                <div class="form-text text-danger" *ngIf="!organizerForm.get('address').valid && organizerForm.get('address').touched">
+                    Address cannot be blank.
+                </div>
+              </div>
+              <div class="form-group col-md-8 offset-md-2 col-sm-12 mt-md-2">
+                  <label for="ogMobile">Mobile*</label>
+                  <input type="text" class="form-control" id="ogMobile" formControlName="mobile">
+                  <div class="form-text text-danger" *ngIf="organizerForm.get('mobile').hasError('required') && organizerForm.get('mobile').touched">
+                      Mobile No. cannot be blank.
+                  </div>
+                  <div class="form-text text-danger" *ngIf="organizerForm.get('mobile').hasError('pattern') && organizerForm.get('mobile').touched">
+                      Please enter a valid mobile no.
+                  </div>
+                </div>
+            <div class="form-group col-md-8 offset-md-2 col-sm-12 mt-md-2">
+              <label for="VenuSelect">Available Venues* </label>
+              <select class="form-control" multiple id="VenuSelect" formControlName="availableVenues">
+                <option *ngFor="let item of venueList" [value]="item.venueName">{{ item.venueName }}</option>
+              </select>
+              <div class="form-text text-danger" *ngIf="!organizerForm.get('availableVenues').valid && organizerForm.get('availableVenues').touched">
+                  Please select some venue(s).
+              </div>
+            </div>
+            <div class="form-group col-md-8 offset-md-2 col-sm-12 mt-md-2">
+                <label for="eventSelect">Available Events* </label>
+                <select class="form-control" multiple id="eventSelect" formControlName="availableEvents">
+                  <option *ngFor="let item of eventList" [value]="item.eventName">{{ item.eventName }}</option>
+                </select>
+                <div class="form-text text-danger" *ngIf="!organizerForm.get('availableEvents').valid && organizerForm.get('availableEvents').touched">
+                    Please select some event(s).
+                </div>
+            </div>
+            <div class="form-row mt-5">
+              <div class="form-group col-md-4 offset-md-2 col-sm-6">
+                <button class="btn btn-outline-primary btn-block" type="submit" [disabled]="!organizerForm.valid" *ngIf="!showLoader">
+                    <i class="fas fa-user-plus mr-2"></i> Register
+                </button>
+
+                <button class="btn btn-outline-primary btn-block" type="button" disabled *ngIf="showLoader">
+                    <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
+                    Please wait...
+                  </button>
+
+              </div>
+              <div class="form-group col-md-4 col-sm-6">
+                  <button class="btn btn-outline-dark btn-block" [routerLink]="['/organizerHome']" type="button">
+                      <i class="fas fa-ban mr-2"></i> Cancel
+                  </button>
+                </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <span class="d-none d-lg-block"> (hold ctrl to select multiple) </span>  -->
