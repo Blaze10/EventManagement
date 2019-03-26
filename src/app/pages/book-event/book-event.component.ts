@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 import { BsDatepickerConfig } from 'ngx-bootstrap';
 import { DatePipe } from '@angular/common';
 import { BookingsService } from 'src/app/_Services/bookings.service';
+import { Venue } from 'src/app/_Models/venue.model';
+import { VenuesService } from 'src/app/_Services/venues.service';
 
 @Component({
   selector: 'app-book-event',
@@ -20,12 +22,14 @@ export class BookEventComponent implements OnInit {
   currentUserEmail;
   venueList =  [];
   eventList = [];
+  allVenues: Venue[] = [];
   organizersList: Organizer[] = [];
   selectedOrganizer: Organizer;
   bookingForm: FormGroup;
 
   constructor(private alertify: AlertifyService, private router: Router,
-              private OrgService: OrganizersService, private bookingService: BookingsService) {
+              private OrgService: OrganizersService, private bookingService: BookingsService,
+              private venuService: VenuesService) {
                 this.datepickerConfig = Object.assign({}, {
                   containerClass: 'theme-default',
                   dateInputFormat: 'DD-MM-YYYY'
@@ -35,16 +39,21 @@ export class BookEventComponent implements OnInit {
   ngOnInit() {
     this.currentUserEmail = localStorage.getItem('userEmail');
     this.bookingService.getBookingsList();
-    this.getAllOrganizers();
+    // this.getAllOrganizers();
     this.initBookingForm();
+    this.getAllVenues();
   }
 
-  getAllOrganizers() {
+  getAllOrganizers(venue) {
     this.OrgService.getAllOrganizers().snapshotChanges().subscribe(item => {
+      this.organizersList = [];
       item.forEach(element => {
         const x = element.payload.toJSON();
         x['$key'] = element.key;
-        this.organizersList.push(x as Organizer);
+        const avevents = Object.values(x['availableVenues']);
+        if (avevents.includes(venue)) {
+          this.organizersList.push(x as Organizer);
+        }
       });
     },
     (err => {
@@ -53,12 +62,21 @@ export class BookEventComponent implements OnInit {
     }));
   }
 
+  getAllVenues() {
+    this.venuService.getVenueList().valueChanges().subscribe((venuList: Venue[]) => {
+      this.allVenues = venuList;
+    },
+    (err => {
+      console.log(err);
+    }));
+  }
+
   initBookingForm() {
     this.bookingForm = new FormGroup({
       customeremail: new FormControl(this.currentUserEmail),
-      organizer: new FormControl(null, Validators.required),
+      organizer: new FormControl({value: null, disabled: true}, Validators.required),
       venue: new FormControl(null, Validators.required),
-      event: new FormControl(null, Validators.required),
+      event: new FormControl({value: null, disabled: true}, Validators.required),
       date: new FormControl(new Date(), Validators.required),
       comments: new FormControl(''),
       status: new FormControl('Pending')
@@ -66,20 +84,33 @@ export class BookEventComponent implements OnInit {
   }
 
   onOrganizerSelect() {
+    const key = this.bookingForm.value.venue;
+    if (key === null || key === undefined || key === 'Select') {
+      this.eventList = [];
+      this.venueList = [];
+      this.bookingForm.get('organizer').disable();
+    } else {
+      this.getAllOrganizers(key);
+      this.bookingForm.get('organizer').enable();
+    }
+  }
+  onOrgSelect() {
     const key = this.bookingForm.value.organizer;
     if (key === null || key === undefined || key === 'Select') {
       this.eventList = [];
       this.venueList = [];
+      this.bookingForm.get('event').disable();
     } else {
-      this.OrgService.getOrganizerByKey(key).valueChanges().subscribe((item: Organizer) => {
-        this.selectedOrganizer = item;
-        this.eventList = this.selectedOrganizer.availableEvents;
-        this.venueList = this.selectedOrganizer.availableVenues;
-      },
-      (err => {
-        console.log(err);
-        this.alertify.error('Some error occured');
-      }));
+      this.OrgService.getOrganizerByKey(key).valueChanges()
+    .subscribe((organizer: any) => {
+      this.bookingForm.get('event').enable();
+      this.selectedOrganizer = organizer;
+      this.eventList = this.selectedOrganizer.availableEvents;
+    },
+    (err => {
+      this.bookingForm.get('event').disable();
+      console.log(err);
+    }));
     }
   }
 

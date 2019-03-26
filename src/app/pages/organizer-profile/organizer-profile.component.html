@@ -14,34 +14,75 @@
           <h4> <i class="fas fa-user-circle mr-2"></i> {{ loggedInOrganizer?.fullName }}'s Profile</h4>
         </div>
         <div class="card-body">
-          <form>
+          <form [formGroup]="organizerForm" (ngSubmit)="onSubmit()">
             <div class="form-group col-md-12 col-sm-12">
               <label for="orgName">Name</label>
-              <input type="text" class="form-control" [value]="loggedInOrganizer?.fullName" disabled id="orgName">
+              <input type="text" class="form-control" formControlName="fullName"
+                id="orgName">
+                <div class="form-text text-danger" *ngIf="!organizerForm.get('fullName').valid && organizerForm.get('fullName').touched">
+                  Name cannot be blank.
+                </div>
             </div>
             <div class="form-group col-md-12 col-sm-12">
               <label for="orgEmail">Email</label>
-              <input type="text" class="form-control" [value]="loggedInOrganizer?.email" disabled id="orgEmail">
+              <input type="text" class="form-control" formControlName="email"
+               disabled id="orgEmail">
             </div>
             <div class="form-group col-md-12 col-sm-12">
               <label for="orgMogile">Mobile</label>
-              <input type="text" class="form-control" [value]="loggedInOrganizer?.mobile" disabled id="orgMogile">
+              <input type="text" class="form-control" formControlName="mobile"
+                id="orgMogile">
+                <div class="form-text text-danger" *ngIf="organizerForm.get('mobile').hasError('required') && organizerForm.get('mobile').touched">
+                  Mobile No. cannot be blank.
+              </div>
+              <div class="form-text text-danger" *ngIf="organizerForm.get('mobile').hasError('pattern') && organizerForm.get('mobile').touched">
+                  Please enter a valid mobile no.
+              </div>
             </div>
             <div class="form-group col-md-12 col-sm-12">
               <label for="orgAddress">Address</label>
-              <textarea class="form-control" [value]="loggedInOrganizer?.address" disabled rows="4" id="orgAddress"></textarea>
+              <textarea class="form-control" formControlName="address"
+               rows="4" id="orgAddress"></textarea>
+               <div class="form-text text-danger" *ngIf="!organizerForm.get('address').valid && organizerForm.get('address').touched">
+                Address cannot be blank.
+            </div>
             </div>
             <div class="form-group col-md-12 col-sm-12">
               <label for="orgEvents">Available Events</label>
-              <select multiple class="form-control" disabled id="orgEvents">
-                <option *ngFor="let item of eventList" [value]="item">{{ item }}</option>
+              <select multiple class="form-control" formControlName="availableEvents" id="orgEvents">
+                <option *ngFor="let item of eventList" [value]="item.eventName">{{ item.eventName }}</option>
               </select>
+              <div class="form-text text-danger" *ngIf="!organizerForm.get('availableVenues').valid && organizerForm.get('availableVenues').touched">
+                Please select some venue(s).
+            </div>
             </div>
             <div class="form-group col-md-12 col-sm-12">
               <label for="orgVenues">Available Venues</label>
-              <select multiple class="form-control" disabled id="orgVenues">
-                <option *ngFor="let item of venueList" [value]="item">{{ item }}</option>
+              <select multiple class="form-control" formControlName="availableVenues"
+               id="orgVenues">
+                <option *ngFor="let item of venueList" [value]="item.venueName">{{ item.venueName }}</option>
               </select>
+              <div class="form-text text-danger" *ngIf="!organizerForm.get('availableEvents').valid && organizerForm.get('availableEvents').touched">
+                Please select some event(s).
+            </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6 col-sm-12">
+                <button class="btn btn-outline-primary btn-block" type="submit" *ngIf="!editLoader"
+                [disabled]="!organizerForm.valid || !organizerForm.dirty">
+                    <i class="fa fa-save mr-2"></i>Save Changes
+                </button>
+                <button class="btn btn-outline-primary btn-block" type="button" disabled *ngIf="editLoader">
+                  <span class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
+                  Please wait..
+                </button>
+              </div>
+              <div class="form-group col-md-6 col-sm-12">
+                <button class="btn btn-outline-primary btn-block" type="button"
+                data-toggle="modal" data-target="#exampleModal">
+                  <i class="fas fa-key mr-2"></i>Change Password
+                </button>
+              </div>
             </div>
           </form>
         </div>
@@ -50,6 +91,43 @@
         <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
           <span class="sr-only">Loading...</span>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-key mr-2"></i>Change Password</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="passwordForm" (ngSubmit)="onChangePassword()">
+          <div class="form-group col-md-12 col-sm-12">
+            <input type="password" class="form-control" placeholder=" New Password" formControlName="password">
+            <div class="form-text text-danger" *ngIf="passwordForm.get('password').getError('required') && passwordForm.get('password').touched">
+              Password cannot be blank.
+          </div>
+          <div class="form-text text-danger" *ngIf="passwordForm.get('password').getError('minlength') && passwordForm.get('password').touched">
+             Password should contain atleast 8 characters.
+          </div>
+          </div>
+          <div class="form-group col-md-6 col-sm-12">
+            <button class="btn btn-outline-primary btn-block" type="submit" [disabled]="!passwordForm.valid" *ngIf="!passwordLoader">
+              Confirm
+            </button>
+            <button class="btn btn-outline-primary btn-block" type="button" disabled *ngIf="passwordLoader">
+              <span class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
+              Please wait..
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

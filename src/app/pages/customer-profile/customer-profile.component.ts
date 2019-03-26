@@ -99,7 +99,7 @@ export class CustomerProfileComponent implements OnInit {
     .catch((err) => {
       this.passwordLoader = false;
       console.log(err.message);
-      this.alertify.error('Some error occured. Please try again after sometime.');
+      this.alertify.error(err.message);
     });
   }
 }

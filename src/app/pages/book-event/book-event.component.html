@@ -13,25 +13,25 @@
                   <input type="text" class="form-control" id="custEmail" formControlName="customeremail" disabled>
               </div>
               <div class="form-group col-md-4 col-sm-6">
-                  <label for="organizer">Organizer</label>
-                  <select class="form-control" id="organizer" (change)="onOrganizerSelect()" formControlName="organizer">
-                    <option selected [ngValue]="null">Select</option>
-                    <option *ngFor="let item of organizersList" [value]="item.$key">{{ item.fullName }}</option>
-                  </select>
-                  <div class="form-text text-danger" *ngIf="!bookingForm.get('organizer').valid && bookingForm.get('organizer').touched">
-                    Please select an organizer.
-                  </div>
-              </div>
-              <div class="form-group col-md-4 col-sm-6">
                   <label for="venue">Venue</label>
-                  <select class="form-control" id="venue" formControlName="venue">
+                  <select class="form-control" id="venue" formControlName="venue" (change)="onOrganizerSelect()">
                     <option selected [ngValue]="null">Select</option>
-                    <option *ngFor="let item of venueList" [value]="item"> {{ item }}</option>
+                    <option *ngFor="let item of allVenues" [value]="item.venueName"> {{ item.venueName }}</option>
                   </select>
                   <div class="form-text text-danger" *ngIf="!bookingForm.get('venue').valid && bookingForm.get('venue').touched">
                       Please select a venue.
                   </div>
               </div>
+              <div class="form-group col-md-4 col-sm-6">
+                <label for="organizer">Organizer</label>
+                <select class="form-control" id="organizer" formControlName="organizer" (change)="onOrgSelect()">
+                  <option selected [ngValue]="null">Select</option>
+                  <option *ngFor="let item of organizersList" [value]="item.$key">{{ item.fullName }}</option>
+                </select>
+                <div class="form-text text-danger" *ngIf="!bookingForm.get('organizer').valid && bookingForm.get('organizer').touched">
+                  Please select an organizer.
+                </div>
+            </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-4 col-sm-6">

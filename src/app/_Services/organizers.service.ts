@@ -21,6 +21,10 @@ registerOrganizer(organizer: Organizer) {
   return this.organizersList.push(organizer);
 }
 
+updateOrganizer(key, organizer) {
+  return this.organizersList.update(key, organizer);
+}
+
 makeOrganizerEntry(email: string) {
   return this.db.list('college/organizers').push({'email': email});
 }
