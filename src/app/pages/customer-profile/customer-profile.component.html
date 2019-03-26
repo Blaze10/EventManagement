@@ -6,22 +6,50 @@
           <h4> <i class="fas fa-user-circle mr-2"></i> {{ loggedInCustomer?.fullName }}'s Profile</h4>
         </div>
         <div class="card-body">
-          <form>
+          <form [formGroup]="userForm" (ngSubmit)="onSubmit()" >
             <div class="form-group col-md-12 col-sm-12">
               <label for="customerName">Name</label>
-              <input type="text" class="form-control" [value]="loggedInCustomer?.fullName" disabled id="customerName">
+              <input type="text" class="form-control" formControlName="fullName">
+              <div class="form-text text-danger" *ngIf="!userForm.get('fullName').valid && userForm.get('fullName').touched">
+                Name cannot be blank.
+              </div>
             </div>
             <div class="form-group col-md-12 col-sm-12">
               <label for="customerEmail">Email</label>
-              <input type="text" class="form-control" [value]="loggedInCustomer?.email" disabled id="customerEmail">
+              <input type="text" class="form-control" disabled id="customerEmail" formControlName="email">
             </div>
             <div class="form-group col-md-12 col-sm-12">
               <label for="customerMobile">Mobile</label>
-              <input type="text" class="form-control" [value]="loggedInCustomer?.mobile" disabled id="customerMobile">
+              <input type="text" class="form-control" id="customerMobile" formControlName="mobile">
+              <div class="form-text text-danger" *ngIf="userForm.get('mobile').getError('required') && userForm.get('mobile').touched">
+                Mobile cannot be blank.
+            </div>
+            <div class="form-text text-danger" *ngIf="userForm.get('mobile').getError('pattern') && userForm.get('mobile').touched">
+                Please enter a valid mobile number.
+            </div>
             </div>
             <div class="form-group col-md-12 col-sm-12">
               <label for="customeraddress">Address</label>
-              <textarea class="form-control" [value]="loggedInCustomer?.address" disabled rows="4" id="customeraddress"></textarea>
+              <textarea class="form-control" rows="4" id="customeraddress" formControlName="address"></textarea>
+              <div class="form-text text-danger" *ngIf="!userForm.get('address').valid && userForm.get('address').touched">
+                Address cannot be blank.
+              </div>
+            </div>
+            <div class="form-row mt-4">
+              <div class="form-group col-md-6 col-sm-6">
+                <button class="btn btn-outline-primary btn-block" type="button" data-toggle="modal" data-target="#exampleModal">
+                  <i class="fas fa-key mr-2"></i>Change Password
+                </button>
+              </div>
+              <div class="form-group col-md-6 col-sm-6">
+                  <button class="btn btn-outline-primary btn-block" type="submit" [disabled]="!userForm.valid || !userForm.dirty" *ngIf="!editLoader">
+                      <i class="fa fa-save mr-2"></i>Save Changes
+                  </button>
+                  <button class="btn btn-outline-primary btn-block" type="button" disabled *ngIf="editLoader">
+                    <span class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
+                    Please wait..
+                  </button>
+              </div>
             </div>
           </form>
         </div>
@@ -30,6 +58,42 @@
         <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
           <span class="sr-only">Loading...</span>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-key mr-2"></i>Change Password</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="passwordForm" (ngSubmit)="onChangePassword()">
+          <div class="form-group col-md-12 col-sm-12">
+            <input type="password" class="form-control" placeholder=" New Password" formControlName="password">
+            <div class="form-text text-danger" *ngIf="passwordForm.get('password').getError('required') && passwordForm.get('password').touched">
+              Password cannot be blank.
+          </div>
+          <div class="form-text text-danger" *ngIf="passwordForm.get('password').getError('minlength') && passwordForm.get('password').touched">
+             Password should contain atleast 8 characters.
+          </div>
+          </div>
+          <div class="form-group col-md-6 col-sm-12">
+            <button class="btn btn-outline-primary btn-block" type="submit" [disabled]="!passwordForm.valid" *ngIf="!passwordLoader">
+              Confirm
+            </button>
+            <button class="btn btn-outline-primary btn-block" type="button" disabled *ngIf="passwordLoader">
+              <span class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
+              Please wait..
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

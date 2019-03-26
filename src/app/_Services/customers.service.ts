@@ -20,6 +20,10 @@ registerCustomer(customer: Customer) {
   return this.customersList.push(customer);
 }
 
+updateCustomer(customer: Customer, key) {
+  return this.customersList.update(key, customer);
+}
+
 makeCustomerEntry(email: string) {
   return this.db.list('college/customers').push({'email': email});
 }

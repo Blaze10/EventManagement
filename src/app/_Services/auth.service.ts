@@ -43,4 +43,7 @@ getCurrentUser() {
   return this.afAuth.auth.currentUser;
 }
 
+resetUserPassword(password) {
+  return this.afAuth.auth.currentUser.updatePassword(password);
+}
 }
