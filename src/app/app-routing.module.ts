@@ -8,6 +8,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CustomerProfileComponent } from './pages/customer-profile/customer-profile.component';
 import { OrganizerProfileComponent } from './pages/organizer-profile/organizer-profile.component';
+import { OrganizerBookingsComponent } from './pages/organizer-bookings/organizer-bookings.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -17,7 +18,8 @@ const routes: Routes = [
   {path: 'customerProfile', component: CustomerProfileComponent},
   {path: 'organizerProfile', component: OrganizerProfileComponent},
   {path: 'bookEvent', component: BookEventComponent},
-  {path: 'customerBookings', component: CustomerBookingsComponent}
+  {path: 'customerBookings', component: CustomerBookingsComponent},
+  {path: 'organizerBookings', component: OrganizerBookingsComponent}
 ];
 
 @NgModule({

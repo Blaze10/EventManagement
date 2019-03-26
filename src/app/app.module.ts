@@ -20,6 +20,7 @@ import { OrganizerProfileComponent } from './pages/organizer-profile/organizer-p
 import { BookEventComponent } from './pages/book-event/book-event.component';
 import { BsDatepickerModule } from 'ngx-bootstrap';
 import { CustomerBookingsComponent } from './pages/customer-bookings/customer-bookings.component';
+import { OrganizerBookingsComponent } from './pages/organizer-bookings/organizer-bookings.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { CustomerBookingsComponent } from './pages/customer-bookings/customer-bo
     CustomerProfileComponent,
     OrganizerProfileComponent,
     BookEventComponent,
-    CustomerBookingsComponent
+    CustomerBookingsComponent,
+    OrganizerBookingsComponent
   ],
   imports: [
     BrowserModule,

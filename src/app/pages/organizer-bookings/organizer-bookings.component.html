@@ -1,0 +1,158 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-12 col-sm-12">
+      <div class="card">
+        <div class="card-header bg-dark text-white">
+          <h4><i class="fas fa-clipboard-list mr-2"></i> Booking requests</h4>
+        </div>
+        <div class="card-body" *ngIf="!showLoader">
+          <div class="table-responsive">
+            <table class="table -table-hover">
+              <thead>
+                <tr>
+                  <th>Sr No</th>
+                  <th>Customer</th>
+                  <th>Date</th>
+                  <th>Event</th>
+                  <th>Venue</th>
+                  <th>Status</th>
+                  <th>Details</th>
+                  <th>Edit</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of organizerBookings; let i = index;">
+                    <td>{{ i+1 }}</td>
+                    <td>{{ item.customeremail }}</td>
+                    <td>{{ item.date }}</td>
+                    <td>{{ item.event }}</td>
+                    <td>{{ item.venue }}</td>
+                    <td>{{ item.status }}</td>
+                    <td>
+                      <button class="btn btn-outline-dark" data-toggle="modal"
+                      data-target="#detailModal" (click)="onDetail(item.customeremail, item.comments);">
+                          <i class="fas fa-eye mr-2"></i>Details
+                      </button>
+                    </td>
+                    <td>
+                      <button class="btn btn-outline-primary" data-toggle="modal"
+                      data-target="#editModal" (click)="onEdit(item)">
+                          <i class="fas fa-edit mr-2"></i>Edit
+                      </button>
+                    </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="text-center mt-5" *ngIf="showLoader">
+            <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+            <br><br>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="detailModal" tabindex="-1" role="dialog"
+ aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">
+              <i class="far fa-user-circle mr-2"></i>   Customer details
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="form-group col-md-4 col-sm-12">
+              <label> Name </label>
+              <input type="text" class="form-control" [value]="detailCustomer?.fullName" disabled>
+            </div>
+            <div class="form-group col-md-4 col-sm-12">
+                <label> Mobile </label>
+                <input type="text" class="form-control" [value]="detailCustomer?.mobile" disabled>
+            </div>
+            <div class="form-group col-md-4 col-sm-12">
+                <label> Email </label>
+                <input type="text" class="form-control" [value]="detailCustomer?.email" disabled>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Comments</label>
+            <textarea disabled rows="4" class="form-control" [value]="customerComment"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog"
+aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+   <div class="modal-dialog modal-lg" role="document">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title" id="exampleModalLongTitle">
+             <i class="far fa-user-circle mr-2"></i> Edit Booking
+         </h5>
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+       <div class="modal-body">
+         <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+            <div class="form-row">
+                <div class="form-group col-md-4 col-sm-12">
+                  <label> Customer </label>
+                  <input type="text" class="form-control" disabled [value]="detailBooking?.customeremail">
+                </div>
+                <div class="form-group col-md-4 col-sm-12">
+                    <label> Date </label>
+                    <input type="text" class="form-control" disabled [value]="detailBooking?.date">
+                </div>
+                <div class="form-group col-md-4 col-sm-12">
+                    <label> Event </label>
+                    <input type="text" class="form-control" disabled [value]="detailBooking?.event">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-4 col-sm-12">
+                  <label> Venue </label>
+                  <input type="text" class="form-control" disabled [value]="detailBooking?.venue">
+                </div>
+                <div class="form-roup col-md-4 col-sm-12">
+                   <label>Status</label>
+                   <select class="form-control" [value]="detailBooking?.status" formControlName="status">
+                     <option value="Pending">Pending</option>
+                     <option value="Approved">Approve</option>
+                     <option value="Rejected">Reject</option>
+                   </select>
+                </div>
+                <div class="form-group col-md-2 col-sm-12 offset-md-2">
+                  <br>
+                  <button class="btn btn-outline-dark btn-block mt-2" type="submit" *ngIf="!editLoader">
+                    <i class="fa fa-save mr-2"></i> Submit
+                  </button>
+
+                  <button class="btn btn-outline-dark btn-block mt-2" type="button" disabled
+                  *ngIf="editLoader">
+                      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                      Please wait...
+                    </button>
+
+                </div>
+              </div>
+         </form>
+
+       </div>
+     </div>
+   </div>
+ </div>

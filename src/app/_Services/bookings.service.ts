@@ -20,8 +20,15 @@ createBookings(data: Booking) {
 }
 
 getMyBookings(email) {
-  console.log(email);
   return this.db.list('college/bookingsList', ref => ref.orderByChild('customeremail').equalTo(email));
+}
+
+getOrganizerBookings(email) {
+  return this.db.list('college/bookingsList', ref => ref.orderByChild('organizer').equalTo(email));
+}
+
+editBookingStatus(bookingId, status) {
+  return this.db.object('college/bookingsList/' + bookingId + '/status').set(status);
 }
 
 }
