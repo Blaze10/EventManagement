@@ -28,7 +28,7 @@ logout() {
 }
 
 isLoggedIn() {
-  return !!this.afAuth.auth.currentUser;
+  return !!(localStorage.getItem('userRole')) && !!(localStorage.getItem('userEmail'));
 }
 
 isOrganizerLoggedIn() {

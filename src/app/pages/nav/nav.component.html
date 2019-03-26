@@ -8,51 +8,51 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto mr-5 text-sm-center">
-      <li class="nav-item" *ngIf="!authService.isLoggedIn()">
+      <li class="nav-item mr-2 ml-1" *ngIf="!authService.isLoggedIn()">
         <a class="nav-link" [routerLink]="['/home']" routerLinkActive="active" >
           <i class="fas fa-user-shield mr-1"></i>Customer login <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item" *ngIf="!authService.isLoggedIn()">
+      <li class="nav-item mr-2 ml-1" *ngIf="!authService.isLoggedIn()">
         <a class="nav-link" [routerLink]="['/organizerHome']" routerLinkActive="active" >
           <i class="fas fa-users-cog mr-1"></i>Organizer login
         </a>
       </li>
-      <li class="nav-item mt-2 mr-5" *ngIf="authService.isLoggedIn()">
+      <li class="nav-item mt-2 mr-5 text-primary" *ngIf="authService.isLoggedIn()">
           <a>
               <i class="fas fa-at mr-1"></i> {{ useremail }}
           </a>
       </li>
 
 
-      <li class="nav-item" *ngIf="authService.isCustomerLoggedIn()">
+      <li class="nav-item mr-2 ml-1" *ngIf="authService.isCustomerLoggedIn()">
           <a class="nav-link" [routerLink]="['/customerProfile']" routerLinkActive="active" >
               <i class="fas fa-user mr-1"></i> Profile
           </a>
       </li>
 
-      <li class="nav-item" *ngIf="authService.isCustomerLoggedIn()">
+      <li class="nav-item mr-2 ml-1" *ngIf="authService.isCustomerLoggedIn()">
           <a class="nav-link" [routerLink]="['/bookEvent']" routerLinkActive="active" >
             <i class="fas fa-thumbtack  mr-1"></i> Book events
           </a>
       </li>
 
-      <li class="nav-item" *ngIf="authService.isCustomerLoggedIn()">
+      <li class="nav-item mr-2 ml-1" *ngIf="authService.isCustomerLoggedIn()">
           <a class="nav-link" [routerLink]="['/customerBookings']" routerLinkActive="active" >
             <i class="fas fa-bookmark mr-1"></i> My Bookings
           </a>
       </li>
 
-      <li class="nav-item" *ngIf="authService.isOrganizerLoggedIn()">
+      <li class="nav-item mr-2 ml-1" *ngIf="authService.isOrganizerLoggedIn()">
           <a class="nav-link" [routerLink]="['/organizerProfile']" routerLinkActive="active" >
               <i class="fas fa-user mr-1"></i> Profile
           </a>
       </li>
 
-      <li class="nav-item" *ngIf="authService.isOrganizerLoggedIn()">
-          <span class="badge badge-pill badge-dark" *ngIf="showNotification"
+      <li class="nav-item mr-2 ml-1" *ngIf="authService.isOrganizerLoggedIn()">
+          <!-- <span class="badge badge-pill badge-dark" *ngIf="showNotification"
           style="float:right;margin-bottom:-12px;">
               New
-             </span>
+             </span> -->
         <a class="nav-link" [routerLink]="['/organizerBookings']" routerLinkActive="active" >
           <i class="fas fa-clipboard-list mr-1"></i>
            Booking Requests
@@ -69,17 +69,17 @@
           <a class="dropdown-item" href="#">Something else here</a>
         </div>
       </li> -->
-      <li class="nav-item">
+      <li class="nav-item mr-2 ml-1">
         <a class="nav-link" href="#">
             <i class="fas fa-address-card mr-1"></i>About us
         </a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item  mr-2 ml-1">
         <a class="nav-link" href="#">
             <i class="fas fa-envelope mr-1"></i> Contact
         </a>
       </li>
-      <li class="nav-item" *ngIf="authService.isLoggedIn()">
+      <li class="nav-item mr-2 ml-1" *ngIf="authService.isLoggedIn()">
           <a class="nav-link" (click)="authService.logout();" style="cursor: pointer;">
               <i class="fas fa-sign-out-alt mr-1"></i>Logout
           </a>

@@ -21,6 +21,7 @@ export class OrganizerBookingsComponent implements OnInit {
   detailBooking: Booking;
   editForm: FormGroup;
   editLoader = false;
+  showAlert = false;
 
   constructor(private bookingsService: BookingsService, private alertify: AlertifyService,
               private customerService: CustomersService) { }
@@ -42,9 +43,10 @@ export class OrganizerBookingsComponent implements OnInit {
         x['bookingId'] = element.key;
         this.organizerBookings.push(x as Booking);
       });
-      console.log(this.organizerBookings);
+      this.showAlert = true;
     },
     (err => {
+      this.showAlert = true;
       this.showLoader = false;
       console.log(err);
       this.alertify.error('Some error occured');

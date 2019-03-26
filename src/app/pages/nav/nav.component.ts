@@ -1,5 +1,5 @@
 import { AuthService } from './../../_Services/auth.service';
-import { Component, OnInit, DoCheck } from '@angular/core';
+import { Component, OnInit, DoCheck, OnChanges, AfterViewInit, AfterContentInit } from '@angular/core';
 import { BookingsService } from 'src/app/_Services/bookings.service';
 import { Booking } from 'src/app/_Models/booking.model';
 declare let $: any;
@@ -9,7 +9,7 @@ declare let $: any;
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css']
 })
-export class NavComponent implements OnInit, DoCheck {
+export class NavComponent implements OnInit, AfterViewInit, DoCheck {
   userBookings: Booking[] = [];
   organizerPendingCout = 0;
   constructor(public authService: AuthService, public bookingService: BookingsService) { }
@@ -45,9 +45,13 @@ export class NavComponent implements OnInit, DoCheck {
     }));
   }
 
-  ngDoCheck() {
+  ngAfterViewInit() {
     this.useremail = localStorage.getItem('userEmail');
     this.checkNotification();
+  }
+
+  ngDoCheck() {
+    this.useremail = localStorage.getItem('userEmail');
   }
 
 }

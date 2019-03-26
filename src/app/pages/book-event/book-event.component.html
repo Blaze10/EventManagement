@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-12 col-sm-12">
       <div class="card">
-        <div class="card-header bg-dark text-white">
+        <div class="card-header bg-primary text-white">
           <h4><i class="fas fa-thumbtack mr-2"></i>Book an event</h4>
         </div>
         <div class="card-body">
@@ -59,18 +59,18 @@
             </div>
             <div class="form-row mt-3">
               <div class="form-group col-md-2 col-sm-6">
-                <button class="btn btn-outline-dark btn-block" type="submit" [disabled]="!bookingForm.valid" *ngIf="!showLoader">
+                <button class="btn btn-outline-primary btn-block" type="submit" [disabled]="!bookingForm.valid" *ngIf="!showLoader">
                   <i class="fa fa-save mr-2"></i> Submit
                 </button>
 
-                <button class="btn btn-outline-dark btn-block" type="button" disabled *ngIf="showLoader">
+                <button class="btn btn-outline-primary btn-block" type="button" disabled *ngIf="showLoader">
                     <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
                     Please wait...
                   </button>
 
               </div>
               <div class="form-group col-md-2 col-sm-6">
-                  <button class="btn btn-outline-dark btn-block" type="button" routerLink="/customerProfile">
+                  <button class="btn btn-outline-primary btn-block" type="button" routerLink="/customerProfile">
                     <i class="fa fa-trash mr-2"></i> Cancel
                   </button>
                 </div>

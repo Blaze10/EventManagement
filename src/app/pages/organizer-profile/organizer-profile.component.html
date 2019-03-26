@@ -1,8 +1,16 @@
 <div class="container mt-4">
   <div class="row">
     <div class="col-md-6 col-sm-12 offset-md-3">
+
+        <div class="alert alert-primary alert-dismissible fade show" role="alert" *ngIf="showAlert">
+            <strong>{{ alertMssg }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
       <div class="card" *ngIf="!showLoader">
-        <div class="card-header bg-dark text-white">
+        <div class="card-header bg-primary text-white">
           <h4> <i class="fas fa-user-circle mr-2"></i> {{ loggedInOrganizer?.fullName }}'s Profile</h4>
         </div>
         <div class="card-body">
@@ -39,7 +47,7 @@
         </div>
       </div>
       <div class="text-center mt-5" *ngIf="showLoader">
-        <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
           <span class="sr-only">Loading...</span>
         </div>
       </div>

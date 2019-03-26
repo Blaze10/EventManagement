@@ -14,6 +14,7 @@ export class CustomerBookingsComponent implements OnInit {
   showLoader = false;
   customerBookings: Booking[] = [];
   customerComment;
+  showAlert = false;
   constructor(private bookingService: BookingsService, private alertify: AlertifyService,
               private router: Router) { }
 
@@ -31,9 +32,10 @@ export class CustomerBookingsComponent implements OnInit {
         x['bookingId'] = element.key;
         this.customerBookings.push(x as Booking);
       });
-      console.log(this.customerBookings);
+      this.showAlert = true;
     },
     (err => {
+      this.showAlert = true;
       this.showLoader = false;
       console.log(err.message);
       this.alertify.error('Some error occured');

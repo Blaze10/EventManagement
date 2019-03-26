@@ -1,3 +1,5 @@
+import { BookingsService } from './../../_Services/bookings.service';
+import { Booking } from 'src/app/_Models/booking.model';
 import { Event } from './../../_Models/event.model';
 import { EventsService } from './../../_Services/events.service';
 import { OrganizersService } from './../../_Services/organizers.service';
@@ -12,18 +14,21 @@ import { AlertifyService } from 'src/app/_Services/alertify.service';
 })
 export class OrganizerProfileComponent implements OnInit {
   loggedInOrganizer: Organizer;
+  organizerBookings: Booking[] = [];
   showLoader = false;
+  showAlert = false;
+  alertMssg = '';
+  alertCount = 0;
   eventList = [];
   venueList = [];
   constructor(private organizerSerivce: OrganizersService, private alertify: AlertifyService,
-              private eventService: EventsService) { }
+              private eventService: EventsService, private bookingService: BookingsService) { }
 
   ngOnInit() {
     this.showLoader = true;
-
-    // this.getAllEvents();
-
     const orgEmail = localStorage.getItem('userEmail');
+    this.getBookings(orgEmail);
+
     this.organizerSerivce.getOrganizerByEmail(orgEmail).snapshotChanges().subscribe((item) => {
       item.forEach(element => {
         const x = element.payload.toJSON();
@@ -38,6 +43,25 @@ export class OrganizerProfileComponent implements OnInit {
       this.showLoader = false;
       console.log(err);
       this.alertify.error('Some error occured');
+    }));
+  }
+
+  getBookings(email) {
+    this.bookingService.getOrganizerBookings(email).valueChanges().subscribe((item: any) => {
+      this.alertCount = 0;
+      this.organizerBookings = item;
+      this.organizerBookings.forEach(element => {
+        if (element.status === 'Pending') {
+          this.alertCount = this.alertCount + 1;
+        }
+      });
+      if (this.alertCount > 0) {
+        this.showAlert = true;
+        this.alertMssg = 'You have ' + this.alertCount + ' pending Booking request(s).';
+      }
+    },
+    (err => {
+      console.log(err);
     }));
   }
 

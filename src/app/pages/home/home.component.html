@@ -47,19 +47,19 @@
             </div>
             <div class="form-row mt-4">
               <div class="form-group col-md-4 offset-md-2 col-sm-3 offset-sm-3 mt-md-3">
-                <button class="btn btn-outline-dark btn-block" type="submit" *ngIf="!showLoader">
+                <button class="btn btn-outline-primary btn-block" type="submit" *ngIf="!showLoader">
                   <i class="fas fa-sign-in-alt mr-2"></i> Login
                 </button>
 
-                <button class="btn btn-outline-dark btn-block" type="button" disabled *ngIf="showLoader">
-                    <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
+                <button class="btn btn-outline-primary btn-block" type="button" disabled *ngIf="showLoader">
+                    <span class="spinner-border text-primary spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
                     Please wait...
                  </button>
 
 
               </div>
               <div class="form-group col-md-4 col-sm-3 mt-md-3">
-                <button class="btn btn-outline-dark btn-block" routerLink="/customerRegistration" type="button">
+                <button class="btn btn-outline-primary btn-block" routerLink="/customerRegistration" type="button">
                   <i class="fas fa-user-plus mr-2"></i>Register
                 </button>
               </div>
