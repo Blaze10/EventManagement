@@ -6,17 +6,17 @@
 }
 
 #sliderDiv {
-  animation: moveInRight 1.2s ease-out;
+  animation: moveInRight 1.3s ease-out;
 }
 
 #loginDiv {
-  animation: moveInLeft 1.2s ease-out;
+  animation: moveInLeft 1.3s ease-out;
 }
 
 @keyframes moveInLeft{
   0%{
     opacity: 0;
-    transform: translateX(-150px);
+    transform: translateX(-200px);
   }
   80%{
     transform: translateX(10px);
@@ -31,7 +31,7 @@
 @keyframes moveInRight{
   0%{
     opacity: 0;
-    transform: translateY(150px);
+    transform: translateY(200px);
   }
   80%{
     transform: translateY(-10px);
