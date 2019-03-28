@@ -1,0 +1,85 @@
+.jumbotron {
+  background-color: #f4511e;
+  color: #fff;
+  padding: 100px 25px;
+}
+.container-fluid {
+  padding: 60px 50px;
+}
+.bg-grey {
+  background-color: #f6f6f6;
+}
+.logo-small {
+  color: #f4511e;
+  font-size: 50px;
+}
+.logo {
+  color: #f4511e;
+  font-size: 200px;
+}
+@media screen and (max-width: 768px) {
+  .col-sm-4 {
+    text-align: center;
+    margin: 25px 0;
+  }
+}
+
+#container1 {
+  animation: moveInRight 1s ease-out;
+}
+
+#container2 {
+  animation: moveInBot 1s ease-out;
+}
+
+#container3 {
+  animation: moveInLeft 1s ease-out;
+}
+
+
+@keyframes moveInBot{
+  0%{
+    opacity: 0;
+    transform: translateX(-200px);
+  }
+  80%{
+    transform: translateX(10px);
+  }
+  100%{
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+}
+
+@keyframes moveInRight{
+  0%{
+    opacity: 0;
+    transform: translateY(200px);
+  }
+  80%{
+    transform: translateY(-10px);
+  }
+  100%{
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+@keyframes moveInLeft{
+  0%{
+    opacity: 0;
+    transform: translateY(-200px);
+  }
+  80%{
+    transform: translateY(10px);
+  }
+  100%{
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+

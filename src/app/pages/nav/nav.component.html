@@ -69,13 +69,56 @@
           <a class="dropdown-item" href="#">Something else here</a>
         </div>
       </li> -->
+
+        <!-- Admin Area  -->
+
+      <li class="nav-item mr-2 ml-1" *ngIf="authService.isLoggedIn() && authService.isAdminLoggedIn()">
+          <a class="nav-link" [routerLink]="['/customersList']" routerLinkActive="active">
+            <i class="fas fa-users mr-2"></i>Customers
+          </a>
+        </li>
+
+        <li class="nav-item mr-2 ml-1" *ngIf="authService.isLoggedIn() && authService.isAdminLoggedIn()">
+            <a class="nav-link" [routerLink]="['/organizersList']" routerLinkActive="active" >
+              <i class="fas fa-users-cog mr-2"></i>Organizers
+            </a>
+       </li>
+
+        <li class="nav-item mr-2 ml-1" routerLinkActive="active" *ngIf="authService.isLoggedIn() && authService.isAdminLoggedIn()">
+              <a class="nav-link" [routerLink]="['/bookinsList']" >
+                <i class="fab fa-pinterest-p mr-2"></i>Bookings
+              </a>
+        </li>
+
+        <li class="nav-item mr-2 ml-1" routerLinkActive="active" *ngIf="authService.isLoggedIn() && authService.isAdminLoggedIn()">
+            <a class="nav-link" [routerLink]="['/venueList']" routerLinkActive="active">
+              <i class="fas fa-city mr-2"></i>Venues
+            </a>
+        </li>
+
+        <li class="nav-item mr-2 ml-1" routerLinkActive="active" *ngIf="authService.isLoggedIn() && authService.isAdminLoggedIn()">
+            <a class="nav-link" [routerLink]="['/eventList']" routerLinkActive="active">
+              <i class="fas fa-glass-cheers mr-2"></i>Events
+            </a>
+        </li>
+
+        <li class="nav-item mr-2 ml-1" routerLinkActive="active" *ngIf="authService.isLoggedIn() && authService.isAdminLoggedIn()">
+            <a class="nav-link" [routerLink]="['/messageList']" routerLinkActive="active">
+              <i class="fas fa-envelope-open-text mr-2"></i>Messages
+            </a>
+        </li>
+
+
+          <!-- Admin Area  -->
+
+
       <li class="nav-item mr-2 ml-1">
-        <a class="nav-link" href="#">
+        <a class="nav-link" [routerLink]="['/aboutus']" routerLinkActive="active" >
             <i class="fas fa-address-card mr-1"></i>About us
         </a>
       </li>
       <li class="nav-item  mr-2 ml-1">
-        <a class="nav-link" href="#">
+        <a class="nav-link" [routerLink]="['/contactus']" routerLinkActive="active" >
             <i class="fas fa-envelope mr-1"></i> Contact
         </a>
       </li>

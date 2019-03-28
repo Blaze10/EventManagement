@@ -15,6 +15,7 @@ export class CustomerBookingsComponent implements OnInit {
   customerBookings: Booking[] = [];
   customerComment;
   showAlert = false;
+  p = 1;
   constructor(private bookingService: BookingsService, private alertify: AlertifyService,
               private router: Router) { }
 

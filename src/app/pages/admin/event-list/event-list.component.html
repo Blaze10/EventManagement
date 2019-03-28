@@ -1,0 +1,138 @@
+<div class="container mt-4" *ngIf="!showLoader">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card border-0">
+          <div class="card-header bg-transparent border-0">
+            <div class="row">
+              <div class="col-md-8 col-sm-12">
+                  <h4><i class="fas fa-glass-cheers mr-2"></i> Events list</h4>
+              </div>
+              <div class="col-md-2 col-sm-12">
+                <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#addModal" (click)="onAdd()">
+                  Add event <i class="fas fa-plus ml-2"></i>
+                </button>
+              </div>
+            </div>
+
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Sr No.</th>
+                    <th>Event</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let event of allEventList
+                  | paginate: { id: 'pager',
+                                   itemsPerPage: 10,
+                                   currentPage: p }; let i = index;">
+                    <td>{{ i+1 }}</td>
+                    <td>{{ event.eventName }}</td>
+                    <td>
+                      <button class="btn btn-outline-primary" data-toggle="modal" data-target="#addModal" (click)="onEdit(event)">
+                         <i class="fas fa-edit ml-2"></i>
+                      </button>
+                    </td>
+                    <td><button class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal"
+                       (click)="onDeleteEvent(event.eventId)">
+                         <i class="fas fa-trash-alt ml-2"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <pagination-controls  id="pager"
+                      (pageChange)="p = $event"
+                      autoHide="true"
+                      previousLabel="Previous"
+                      nextLabel="Next"
+                      screenReaderPaginationLabel="Pagination"
+                      screenReaderPageLabel="page"
+                      screenReaderCurrentLabel="You're on page">
+             </pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-5" *ngIf="showLoader">
+      <div class="d-flex justify-content-center">
+          <div class="spinner-grow text-primary" role="status" style="width: 3rem; height: 3rem;">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+  </div>
+
+  <!--  Add Venue Modal -->
+  <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-primary" id="exampleModalLabel"> <i class="fas fa-gifts mr-2"></i>{{mode}} event</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="eventForm" (ngSubmit)="onSubmit()" >
+              <div class="form-group col-md-12 col-sm-12">
+                <input type="text" class="form-control" placeholder="Event" formControlName="eventName">
+                <div class="form-text text-danger" *ngIf="!eventForm.get('eventName').valid && eventForm.get('eventName').touched">
+                  Please enter a name.
+                </div>
+              </div>
+              <div class="form-group col-md-6 col-sm-12">
+                <button class="btn btn-outline-primary btn-block" type="submit" [disabled]="!eventForm.valid" *ngIf="mode === 'New' && !modalLoader">
+                  Submit <i class="fa fa-save ml-2"></i>
+                </button>
+
+                <button class="btn btn-outline-primary btn-block" type="submit" [disabled]="!eventForm.valid || !eventForm.dirty"
+                 *ngIf="mode === 'Edit' && !modalLoader">
+                    Save Changes <i class="fa fa-save ml-2"></i>
+                </button>
+
+                <button class="btn btn-outline-primary btn-block" type="button" disabled *ngIf="modalLoader">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Please wait...
+                  </button>
+
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+      <!--  Delete confirmation Modal -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-danger" id="exampleModalLabel"> <i class="fas fa-exclamation-triangle mr-2"></i>Are you sure ?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <button class="btn btn-outline-primary" (click)="confirmDelte()" *ngIf="!deleteLoader">
+              Confirm<i class="fas fa-check-circle ml-2"></i>
+            </button>
+
+            <button class="btn btn-outline-primary" type="button" disabled *ngIf="deleteLoader">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Please wait...
+              </button>
+
+          </div>
+        </div>
+      </div>
+    </div>

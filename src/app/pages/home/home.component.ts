@@ -48,6 +48,10 @@ export class HomeComponent implements OnInit {
         this.alertify.success('Logged in');
         this.router.navigate(['/customerProfile']);
         this.showLoader = false;
+      } else {
+        this.alertify.error('Invalid Credentials');
+        this.authService.signout();
+        this.showLoader = false;
       }
     })
     .catch(err => {

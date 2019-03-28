@@ -1,0 +1,26 @@
+
+<div class="wrapper fadeInDown mt-5">
+    <div id="formContent">
+      <!-- Tabs Titles -->
+
+      <!-- Icon -->
+      <div class="fadeIn first">
+        <img src="../../assets/admin.png" id="icon" alt="User Icon" />
+      </div>
+
+      <!-- Login Form -->
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" >
+        <input type="text" id="login" class="fadeIn second"  placeholder="Email" formControlName="email">
+        <input type="password" id="password" class="fadeIn third"  placeholder="Password" formControlName="password">
+        <input type="submit" class="fadeIn fourth" value="Log In" *ngIf="!showLoader">
+
+        <div class="text-center" *ngIf="showLoader">
+            <div class="spinner-grow" style="color: #57baed;" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+
+      </form>
+
+    </div>
+  </div>

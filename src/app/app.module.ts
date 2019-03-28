@@ -21,6 +21,16 @@ import { BookEventComponent } from './pages/book-event/book-event.component';
 import { BsDatepickerModule } from 'ngx-bootstrap';
 import { CustomerBookingsComponent } from './pages/customer-bookings/customer-bookings.component';
 import { OrganizerBookingsComponent } from './pages/organizer-bookings/organizer-bookings.component';
+import { AboutUsComponent } from './pages/about-us/about-us.component';
+import { ContactusComponent } from './contactus/contactus.component';
+import { AdminLoginComponent } from './admin-login/admin-login.component';
+import { CustomersListComponent } from './pages/admin/customers-list/customers-list.component';
+import { OrganizersListComponent } from './pages/admin/organizers-list/organizers-list.component';
+import { BookingsListComponent } from './pages/admin/bookings-list/bookings-list.component';
+import { EventListComponent } from './pages/admin/event-list/event-list.component';
+import { VenueListComponent } from './pages/admin/venue-list/venue-list.component';
+import { MessageListComponent } from './pages/admin/message-list/message-list.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -35,7 +45,16 @@ import { OrganizerBookingsComponent } from './pages/organizer-bookings/organizer
     OrganizerProfileComponent,
     BookEventComponent,
     CustomerBookingsComponent,
-    OrganizerBookingsComponent
+    OrganizerBookingsComponent,
+    AboutUsComponent,
+    ContactusComponent,
+    AdminLoginComponent,
+    CustomersListComponent,
+    OrganizersListComponent,
+    BookingsListComponent,
+    EventListComponent,
+    VenueListComponent,
+    MessageListComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +65,8 @@ import { OrganizerBookingsComponent } from './pages/organizer-bookings/organizer
     BsDropdownModule.forRoot(),
     AngularFireModule.initializeApp(environment.config),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

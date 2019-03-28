@@ -8,3 +8,6 @@
 
 
 
+#pager /deep/ .ngx-pagination .current {
+  background: #eb6864;
+}

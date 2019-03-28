@@ -1,3 +1,4 @@
+import { AngularFireList, AngularFireDatabase } from '@angular/fire/database';
 import { Router } from '@angular/router';
 import { AlertifyService } from './alertify.service';
 import { Injectable } from '@angular/core';
@@ -8,8 +9,10 @@ import { AngularFireAuth } from '@angular/fire/auth';
 })
 export class AuthService {
 currentUser;
+adminList: AngularFireList<any>;
+
 constructor(private afAuth: AngularFireAuth, private alertify: AlertifyService,
-            private router: Router) { }
+            private router: Router, private db: AngularFireDatabase) { }
 
 registerOrganizer(email: string, password: string) {
   return this.afAuth.auth.createUserWithEmailAndPassword(email, password);
@@ -17,6 +20,12 @@ registerOrganizer(email: string, password: string) {
 
 loginUser(email: string, password: string) {
   return this.afAuth.auth.signInWithEmailAndPassword(email, password);
+}
+
+signout() {
+  localStorage.clear();
+  this.afAuth.auth.signOut().then(() => {
+  });
 }
 
 logout() {
@@ -39,6 +48,10 @@ isCustomerLoggedIn() {
   return this.isLoggedIn() && !!(localStorage.getItem('userRole') === 'customer');
 }
 
+isAdminLoggedIn() {
+  return this.isLoggedIn() && !!(localStorage.getItem('userRole') === 'admin');
+}
+
 getCurrentUser() {
   return this.afAuth.auth.currentUser;
 }
@@ -46,4 +59,10 @@ getCurrentUser() {
 resetUserPassword(password) {
   return this.afAuth.auth.currentUser.updatePassword(password);
 }
+
+getAdminListEntry() {
+  this.adminList = this.db.list('college/admins');
+  return this.adminList;
+}
+
 }

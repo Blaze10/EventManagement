@@ -48,6 +48,10 @@ export class OrganizerComponent implements OnInit {
         this.alertify.success('Logged in');
         this.router.navigate(['/organizerProfile']);
         this.showLoader = false;
+      } else {
+        this.alertify.error('Invalid Credentials');
+        this.authService.signout();
+        this.showLoader = false;
       }
     })
     .catch(err => {

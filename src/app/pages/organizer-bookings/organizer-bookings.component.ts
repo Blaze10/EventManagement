@@ -22,6 +22,7 @@ export class OrganizerBookingsComponent implements OnInit {
   editForm: FormGroup;
   editLoader = false;
   showAlert = false;
+  p = 1;
 
   constructor(private bookingsService: BookingsService, private alertify: AlertifyService,
               private customerService: CustomersService) { }

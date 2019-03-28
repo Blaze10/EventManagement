@@ -21,13 +21,15 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of organizerBookings; let i = index;">
+                <tr *ngFor="let item of organizerBookings | paginate: { id: 'pager',
+                                 itemsPerPage: 10,
+                                 currentPage: p }; let i = index;">
                     <td>{{ i+1 }}</td>
                     <td>{{ item.customeremail }}</td>
                     <td>{{ item.date }}</td>
                     <td>{{ item.event }}</td>
                     <td>{{ item.venue }}</td>
-                    <td>{{ item.status }}</td>
+                    <td [ngClass]="{'text-primary': item.status=='Pending', 'text-danger': item.status=='Rejected', 'text-success': item.status=='Approved'}">{{ item.status }}</td>
                     <td>
                       <button class="btn btn-outline-dark" data-toggle="modal"
                       data-target="#detailModal" (click)="onDetail(item.customeremail, item.comments);">
@@ -43,6 +45,16 @@
                 </tr>
               </tbody>
             </table>
+
+          <pagination-controls  id="pager"
+          (pageChange)="p = $event"
+          autoHide="true"
+          previousLabel="Previous"
+          nextLabel="Next"
+          screenReaderPaginationLabel="Pagination"
+          screenReaderPageLabel="page"
+          screenReaderCurrentLabel="You're on page">
+          </pagination-controls>
           </div>
         </div>
         <div class="text-center mt-5" *ngIf="showLoader">

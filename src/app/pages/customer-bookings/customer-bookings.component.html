@@ -20,18 +20,32 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let item of customerBookings; let i = index;">
+                  <tr *ngFor="let item of customerBookings | paginate: { id: 'pager',
+                  itemsPerPage: 10,
+                  currentPage: p }; let i = index;">
                     <td>{{ i+1 }}</td>
                     <td>{{ item.date }}</td>
                     <td>{{ item.event }}</td>
                     <td>{{ item.venue }}</td>
                     <td>{{ item.organizer }}</td>
-                    <td>{{ item.status }}</td>
+                    <td [ngClass]="{'text-primary': item.status=='Pending', 'text-danger': item.status=='Rejected', 'text-success': item.status=='Approved'}">
+                      {{ item.status }}
+                    </td>
                     <td style="text-align: center"><i class="fas fa-comment-alt" style="cursor: pointer;" (click)="showComment(item.comments);"
                       data-toggle="modal" data-target="#exampleModalLong"></i></td>
                   </tr>
                 </tbody>
               </table>
+
+              <pagination-controls  id="pager"
+              (pageChange)="p = $event"
+              autoHide="true"
+              previousLabel="Previous"
+              nextLabel="Next"
+              screenReaderPaginationLabel="Pagination"
+              screenReaderPageLabel="page"
+              screenReaderCurrentLabel="You're on page">
+              </pagination-controls>
             </div>
             <div class="alert alert-danger" role="alert" *ngIf="customerBookings.length === 0 && showAlert">
                 <h4 class="alert-heading">No Bookings!</h4>
