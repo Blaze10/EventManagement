@@ -26,7 +26,7 @@ export class ContactusComponent implements OnInit {
     this.contactForm = new FormGroup({
       name: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
-      phone: new FormControl(''),
+      phone: new FormControl('', [Validators.required, Validators.pattern('[6-9]\\d{9}')]),
       message: new FormControl('', Validators.required),
       status: new FormControl('New')
     });
